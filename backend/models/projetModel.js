@@ -1,30 +1,11 @@
 import mongoose from "mongoose";
-const questionsSchema = mongoose.Schema({
-
-    question: {
-        type: String,
-        require: true,
-
-    },
-    reponses: {
-        type: String,
-        require: true
-    },
-    cout:{
-        type:Number,
-        require:true
-    }
-
-}, {
-    timestamps: true,
-});
 
 const projetSchema = mongoose.Schema({
     titre: {
         type: String,
         require: true,
     },
-    questions: [questionsSchema],
+    totalreponse: [],
     client: { type: mongoose.Schema.Types.ObjectId, ref: 'Client' }
 }, {
     timestamps: true

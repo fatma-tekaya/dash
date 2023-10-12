@@ -10,13 +10,16 @@ import Question from "../models/questionModel.js";
 
 const addQuestion = asyncHandler(async (req, res) => {
     try {
-        const { quest,rep} = req.body;
-        const question = new Question({
-            quest,rep
-
-        });
+        const { question,reponses} = req.body;
+        const Nquestion =new Question( {
+            question: question,
+            reponses: reponses.map(reponse => ({ reponse: reponse.reponse,
+                 selected: reponse.selected,
+                 cout:reponse.cout })), // Assuming all reponses are incorrect by default
+          });
+      
         // console.log(question.titre)
-        await question.save();
+        await Nquestion.save();
         res.status(201).json("question ajouté");
     } catch (err) {
         res.status(500).json({ error: err.message });
