@@ -22,7 +22,7 @@ const addOffer= asyncHandler( async (req,res) => {
        });
        console.log(offer.titre)
         await offer.save();
-        res.status(201).json(offer);
+     $k
       } catch (err) {
         res.status(500).json({ error: err.message });
       }
