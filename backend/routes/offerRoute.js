@@ -1,6 +1,6 @@
 import express from "express"
 
-import {   
+import {
     addOffer,
     getOffer,
     updateOffer,
@@ -8,14 +8,14 @@ import {
 
 } from "../controllers/offerController.js";
 
-import { adminprotect } from "../middleware/authMiddleware.js"; 
+import { adminprotect } from "../middleware/authMiddleware.js";
 
 
-const router=express.Router();
+const router = express.Router();
 
-router.route('/').post(adminprotect,addOffer).put(adminprotect,updateOffer);
-router.get('/',getOffer);
-router.route('/:id').put(adminprotect,updateOffer).delete(adminprotect,deleteOffer);
+router.route('/').post(adminprotect, addOffer).put(adminprotect, updateOffer);
+router.get('/', getOffer);
+router.route('/:id').put(adminprotect, updateOffer).delete(adminprotect, deleteOffer);
 
 
 

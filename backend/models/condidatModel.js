@@ -1,40 +1,43 @@
-import  mongoose  from  "mongoose";
+import mongoose from "mongoose";
 
-const condidatSchema  = mongoose.Schema({
-    nom:{
-        type:String ,
+const condidatSchema = mongoose.Schema({
+    nom: {
+        type: String,
         require: true,
     },
-    prenom:{
-        type:String ,
+    prenom: {
+        type: String,
         require: true,
     },
-    cv:{
-        type:String ,
+    cv: {
+        type: String,
         require: true,
     },
-    address:{
-        type:String ,
+    address: {
+        type: String,
+    },
+    email: {
+        type: String,
+        require: true,
+        unique: true,
+    },
+    numtel: {
+        type: String,
         require: true,
     },
-    email:{
-        type:String ,
-        require: true,
-        unique:true,
+    genre: {
+        type: String,
     },
-    numtel:{
-        type:String ,
+    linkedin: {
+        type: String,
         require: true,
     },
-    genre:{
-        type:String ,
-    },
-    
 
-},{
-    timestamps:true
+
+}, {
+    timestamps: true
 });
 
 
-const   Condidat = mongoose.model('Condidat',condidatSchema);
+const Condidat = mongoose.model('Condidat', condidatSchema);
 export default Condidat;
