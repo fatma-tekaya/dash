@@ -1,8 +1,8 @@
 import express from "express"
-import { 
+import {
     modifyPassword,
     writeNewPassword,
-    resetPassword,  
+    resetPassword,
     authUser,
     updateUserProfile,
     logoutUser,
@@ -11,20 +11,20 @@ import {
     updateUserNotification
 
 } from "../controllers/userController.js";
-import { adminprotect } from "../middleware/authMiddleware.js"; 
-const router=express.Router();
+import { adminprotect } from "../middleware/authMiddleware.js";
+const router = express.Router();
 
-router.post('/',registerUser)
-router.post('/auth',authUser)
-router.post('/logout',logoutUser)
-router.route('/profile').get(adminprotect,getUserProfile).put(adminprotect,updateUserProfile);
+router.post('/', registerUser)
+router.post('/auth', authUser)
+router.post('/logout', logoutUser)
+router.route('/profile').get(adminprotect, getUserProfile).put(adminprotect, updateUserProfile);
 
-router.route('/notifications').put(adminprotect,updateUserNotification);
+router.route('/notifications').put(adminprotect, updateUserNotification);
 
-router.post('/resetPassword',resetPassword)
-router.post('/writePassword',writeNewPassword)
+router.post('/resetPassword', resetPassword)
+router.post('/writePassword', writeNewPassword)
 
 // router.post('/modifierPassword',,modifyPassword)
-router.route('/modifierPassword').post(adminprotect,modifyPassword);
+router.route('/modifierPassword').post(adminprotect, modifyPassword);
 
 export default router;

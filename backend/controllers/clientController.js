@@ -12,7 +12,7 @@ import Projet from "../models/projetModel.js";
 
 const addClient = asyncHandler(async (req, res) => {
     try {
-        const { nom, numtel, email, desc_proj, titre ,question, reponses} = req.body;
+        const { nom, numtel, email, desc_proj, titre, question, reponses } = req.body;
         const userExists = await Client.findOne({ email });
 
         if (userExists) {
@@ -21,8 +21,8 @@ const addClient = asyncHandler(async (req, res) => {
                 client: userExists._id
 
             });
-            
-           
+
+
             const Nquestion = new Question({
                 question: question,
                 reponses: reponses

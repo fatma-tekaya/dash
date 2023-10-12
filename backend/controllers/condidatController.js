@@ -4,7 +4,7 @@ import Condidat from '../models/condidatModel.js'
 /**
  * @desc add condidat
  *  @route POST /api/condidat
- *  @methode POST
+ *  @methode POSTf
  *  @acces private
  */
 

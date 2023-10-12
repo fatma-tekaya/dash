@@ -10,14 +10,16 @@ import Question from "../models/questionModel.js";
 
 const addQuestion = asyncHandler(async (req, res) => {
     try {
-        const { question,reponses} = req.body;
-        const Nquestion =new Question( {
+        const { question, reponses } = req.body;
+        const Nquestion = new Question({
             question: question,
-            reponses: reponses.map(reponse => ({ reponse: reponse.reponse,
-                 selected: reponse.selected,
-                 cout:reponse.cout })), // Assuming all reponses are incorrect by default
-          });
-      
+            reponses: reponses.map(reponse => ({
+                reponse: reponse.reponse,
+                selected: reponse.selected,
+                cout: reponse.cout
+            })),
+        });
+
         // console.log(question.titre)
         await Nquestion.save();
         res.status(201).json("question ajouté");
@@ -48,21 +50,25 @@ const updateQuestion = asyncHandler(async (req, res) => {
     //console.log(idToUpdate);
     try {
 
-        const question = await Question.findById(idToUpdate);
-        if (!question) {
+        const updatedquestion = await Question.findById(idToUpdate);
+        if (!updatedquestion) {
             console.log("question not found")
 
             return res.status(404).json({ message: "question not found" });
         }
-        console.log(question.titre);
+        // console.log(updatedquestion.question);
+
         const newData = {
-            titre: req.body.titre || question.titre,
-            desc: req.body.desc || question.desc,
-            date_pub: req.body.date_pub || question.date_pub,
-            date_exp: req.body.date_exp || question.date_exp,
+            question: req.body.question || updatedquestion.question,
+            reponses: req.body.reponses.map(reponse => ({
+                reponse: reponse.reponse,
+                selected: reponse.selected,
+                cout: reponse.cout
+            })) || updatedquestion.reponses,
+
         };
-        await question.set(newData);
-        await question.save();
+        await updatedquestion.set(newData);
+        await updatedquestion.save();
         res.json({ message: 'question modifié avec succès' });
 
     } catch (error) {

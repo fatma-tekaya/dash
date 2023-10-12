@@ -1,28 +1,29 @@
 import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
-import  User from '../models/userModel.js'
+import User from '../models/userModel.js'
 
-const adminprotect=asyncHandler(async (req,res , next)=>
-{
+const adminprotect = asyncHandler(async (req, res, next) => {
     let token;
-    token=req.cookies.jwt;
+    token = req.cookies.jwt;
 
-    if(token){
+    if (token) {
         try {
-            const decoded=jwt.verify(token,process.env.JWT_SECRET);
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-            req.user= await User.findById(decoded.userId).select('-password');
-            if(req.user){
-                 next()}
-                 else{   throw new Error('Not authorized, invalid token')    }
+            req.user = await User.findById(decoded.userId).select('-password');
+            if (req.user) {
+                next()
+            }
+            else { throw new Error('Not authorized, invalid token') }
         } catch (error) {
-                res.status(401);
-                throw new Error('Not authorized, invalid token')          
+            res.status(401);
+            throw new Error('Not authorized, invalid token')
         }
     }
-    else{
+    else {
         res.status(401);
         throw new Error('Not authorized , no token')
-}}
+    }
+}
 )
-export {adminprotect}
+export { adminprotect }
