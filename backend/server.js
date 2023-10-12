@@ -1,11 +1,14 @@
 import offerRoute from './routes/offerRoute.js'
 import userRoute from './routes/userRoutes.js'
+import condidatRoute from './routes/condidatRoute.js'
+import clientRoute from './routes/clientRoute.js'
+import infoRoute from './routes/infoRoute.js'
+
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import connectDB from './config/db.js';
-import cors from 'cors';
 import { Server } from 'socket.io';
 
 dotenv.config();
@@ -20,18 +23,13 @@ const httpServer = app.listen(port, () =>
 
 // Socket.io setup using the http server
 const io = new Server(httpServer, {
-    cors: {
-      origin: "*",
+  cors: {
+    origin: "*",
+  },
 
-    },
-
-  });
-
-
-
+});
 
 connectDB();
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -41,10 +39,11 @@ app.use(cookieParser());
 
 app.get('/', (req, res) => res.send('Server is ready'));
 
-
 app.use('/api/offer', offerRoute);
-app.use('/api/users',userRoute);
-
+app.use('/api/users', userRoute);
+app.use('/api/condidat', condidatRoute);
+app.use('/api/client', clientRoute);
+app.use('/api/info', infoRoute);
 app.use(notFound);
 app.use(errorHandler);
 app.set('io', io);

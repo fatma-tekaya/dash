@@ -9,7 +9,7 @@ const offerSchema  = mongoose.Schema({
         type:String ,
         require: true,
     },
-    dat_pub:{
+    date_pub:{
         type:String ,
         require: true,
     },

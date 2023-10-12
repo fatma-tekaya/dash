@@ -1,48 +1,43 @@
-import  mongoose  from  "mongoose";
-import bcrypt from 'bcryptjs'
+import mongoose from "mongoose";
 
-const infoSchema  = mongoose.Schema({
-    titre:{
-        type:String ,
+const infoSchema = mongoose.Schema({
+    titre: {
+        type: String,
         require: true,
     },
-    description:{
-        type:String ,
+    description: {
+        type: String,
         require: true,
     },
-    adresse:{
-        type:String ,
+    adresse: {
+        type: String,
         require: true,
     },
-    facebook:{
-        type:String ,
+    facebook: {
+        type: String,
         require: true,
     },
-    linkedin:{
-        type:String ,
+    linkedin: {
+        type: String,
         require: true,
     },
-    instgram:{
-        type:String ,
+    twiter: {
+        type: String,
         require: true,
     },
-    youtube:{
-        type:String ,
+    numtel: {
+        type: Number,
         require: true,
     },
-    numtel:{
-        type:Number ,
+    email: {
+        type: String,
         require: true,
     },
-    email:{
-        type:String ,
-        require: true,
-    },
-},{
-    timestamps:true
+}, {
+    timestamps: true
 });
 
 
 
-const   Info = mongoose.model('Info',infoSchema);
+const Info = mongoose.model('Info', infoSchema);
 export default Info;

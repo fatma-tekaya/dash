@@ -1,8 +1,6 @@
 import asyncHandler from "express-async-handler"
 import Info from '../models/infoModel.js'
 
-
-
 /**
  * @desc add info
  *  @route POST /api/info
@@ -10,33 +8,32 @@ import Info from '../models/infoModel.js'
  *  @acces private
  */
 
-const addInfo= asyncHandler( async (req,res) => {
-    const {titre , description , adresse,email,numtel,facebook,youtube,instgram,linkedin}=req.body;
-
- 
-    const info = await Info.create({
-        titre,
-        description,
-        adresse,
-        numtel,
-        facebook,
-        youtube,
-        instgram,
-        linkedin,
-        email
-    })
-
-    if(info){
-    
-      res.status(200).json({ message: "Ajouté avec succées " });
+const addInfo = asyncHandler(async (req, res) => {
+  const { titre, description, adresse, email, numtel, facebook, twiter, linkedin } = req.body;
 
 
-    }else{
-        res.status(400);
-        throw new Error('Invalid info data')
-    }
-   
-    // res.status(200).json({message:'Info adedd'})
+  const info = await Info.create({
+    titre,
+    description,
+    adresse,
+    numtel,
+    facebook,
+    twiter,
+    linkedin,
+    email
+  })
+
+  if (info) {
+
+    res.status(200).json({ message: "Ajouté avec succées " });
+
+
+  } else {
+    res.status(400);
+    throw new Error('Invalid info data')
+  }
+
+  // res.status(200).json({message:'Info adedd'})
 });
 
 
@@ -49,10 +46,11 @@ const addInfo= asyncHandler( async (req,res) => {
  *  @acces Public
  */
 
-const getInfo= asyncHandler( async (req,res) => {
-    const info = await Info.find();
+const getInfo = asyncHandler(async (req, res) => {
+  const info = await Info.find();
 
-    res.status(200).json(info)});
+  res.status(200).json(info)
+});
 
 /**
  * @desc Update   info
@@ -61,63 +59,45 @@ const getInfo= asyncHandler( async (req,res) => {
  *  @acces Private
  */
 
-const updateInfo=asyncHandler( async (req, res) => {
-    const idToUpdate = req.params.id.trim();
+const updateInfo = asyncHandler(async (req, res) => {
+  const idToUpdate = req.params.id.trim();
 
-    try {
-      const info = await Info.findById(idToUpdate);
-  
-      if (!info) {
+  try {
+    const info = await Info.findById(idToUpdate);
 
-
-        return res.status(404).json({ message: "Info not found" });
-      }
-  
-      const newData = {
-        titre: req.body.titre|| info.titre,
-        description: req.body.description|| info.description,
-        adresse: req.body.adresse || info.adresse,
-        facebook: req.body.facebook|| info.facebook,
-        linkedin: req.body.linkedin|| info.linkedin,
-        instgram: req.body.instgram|| info.instgram,
-        youtube: req.body.youtube|| info.youtube,
-        numtel: req.body.numtel|| info.numtel,
-        email: req.body.email|| info.email,
-      };
+    if (!info) {
 
 
-      info.set(newData);
-
-
-      const updatedInfo = await info.save();
-  
-      res.status(200).json(updatedInfo);
-    } catch (error) {
-      res.status(500).json({ message: "Error updating info", error: error.message });
+      return res.status(404).json({ message: "Info not found" });
     }
-  })
 
-const deleteInfo=asyncHandler(async (req, res) => {
-    const idToDelete = req.params.id;
-    try {
-      const info = await Info.findById(idToDelete);
-  
-      if (!info) {
-        return res.status(404).json({ message: "Info not found" });
-      }
-  
-      await Info.deleteOne({ _id: idToDelete });
-  
-      res.status(200).json({ message: "Info has been deleted" });
-    } catch (error) {
-      res.status(500).json({ message: "Error deleting info", error: error.message });
-    }
-  })
-export{
+    const newData = {
+      titre: req.body.titre || info.titre,
+      description: req.body.description || info.description,
+      adresse: req.body.adresse || info.adresse,
+      facebook: req.body.facebook || info.facebook,
+      linkedin: req.body.linkedin || info.linkedin,
+      twiter: req.body.twiter || info.twiter,
+      numtel: req.body.numtel || info.numtel,
+      email: req.body.email || info.email,
+    };
 
-    addInfo,
-    getInfo,
-    updateInfo,
-    deleteInfo
+
+    info.set(newData);
+
+
+    const updatedInfo = await info.save();
+
+    res.status(200).json(updatedInfo);
+  } catch (error) {
+    res.status(500).json({ message: "Error updating info", error: error.message });
+  }
+})
+
+export {
+
+  addInfo,
+  getInfo,
+  updateInfo,
 
 }
