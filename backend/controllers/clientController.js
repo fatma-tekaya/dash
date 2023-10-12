@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler"
 import Client from '../models/clientModel.js'
+import Projet from "../models/projetModel.js";
 
 /**
  * @desc add client
@@ -10,16 +11,40 @@ import Client from '../models/clientModel.js'
 
 const addClient = asyncHandler(async (req, res) => {
     try {
-        const { nom, numtel, email, desc_proj } = req.body;
+        const { nom, numtel, email, desc_proj,titre } = req.body;
+        const userExists= await Client.findOne({email});        
+    
+        if(userExists){ 
+            const projet = new Projet({
+                titre,
+                client:userExists._id
+                
+            });
+            await projet.save();
+            userExists.projet.push(projet);
+            await userExists.save();
+            res.status(201).json("projet ajouté");
+
+           
+        } 
+   else{ 
+
         const client = new Client({
             nom,
             numtel,
             email,
             desc_proj
         });
-        console.log(client.titre)
+    
+        const projet = new Projet({
+            titre,
+            client:client._id
+            
+        });
+        await projet.save();
+        client.projet.push(projet);
         await client.save();
-        res.status(201).json("client ajouté");
+        res.status(201).json("client ajouté"); } 
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

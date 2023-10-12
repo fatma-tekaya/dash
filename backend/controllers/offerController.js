@@ -20,8 +20,8 @@ const addOffer = asyncHandler(async (req, res) => {
         });
         // console.log(offer.titre)
         await offer.save();
-        res.status(201).json("offer ajouté");
-    } catch (err) {
+        res.status(201).json(offer);
+      } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });

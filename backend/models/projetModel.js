@@ -12,7 +12,7 @@ const questionsSchema = mongoose.Schema({
     },
     cout:{
         type:Number,
-        require:ture
+        require:true
     }
 
 }, {
