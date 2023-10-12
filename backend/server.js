@@ -3,6 +3,7 @@ import userRoute from './routes/userRoutes.js'
 import condidatRoute from './routes/condidatRoute.js'
 import clientRoute from './routes/clientRoute.js'
 import infoRoute from './routes/infoRoute.js'
+import questionRoute from './routes/questionRoute.js'
 
 import express from 'express';
 import dotenv from 'dotenv';
@@ -40,6 +41,7 @@ app.use(cookieParser());
 app.get('/', (req, res) => res.send('Server is ready'));
 
 app.use('/api/offer', offerRoute);
+app.use('/api/question', questionRoute);
 app.use('/api/users', userRoute);
 app.use('/api/condidat', condidatRoute);
 app.use('/api/client', clientRoute);

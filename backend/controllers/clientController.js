@@ -10,13 +10,12 @@ import Client from '../models/clientModel.js'
 
 const addClient = asyncHandler(async (req, res) => {
     try {
-        const { nom, numtel, email, desc_proj,projet } = req.body;
+        const { nom, numtel, email, desc_proj } = req.body;
         const client = new Client({
             nom,
             numtel,
             email,
-            desc_proj,
-            
+            desc_proj
         });
         console.log(client.titre)
         await client.save();
