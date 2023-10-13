@@ -41,4 +41,4 @@ export const offerApiSlice = apiSlice.injectEndpoints({
     })
 });
 
-export const {useAddMutation,useGetedMutation,useDeleteMutation,useUpdateMutation}=offerApiSlice;
+export const {useAddMutation,useGetMutation,useDeleteMutation,useUpdateMutation}=offerApiSlice;

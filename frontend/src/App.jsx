@@ -49,7 +49,7 @@ const App = () => {
           <Route path='/resetPassword' element={<ResetPassword />} />
           <Route path='/enterCode' element={<EnterCode />} />
           <Route path='/newPassword' element={<NewPassword />} />
-
+          
 
           
 
