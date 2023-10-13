@@ -10,7 +10,7 @@ import Offer from "../models/offerModel.js";
 
 const addOffer = asyncHandler(async (req, res) => {
     try {
-        const { titre, desc, date_pub, date_exp } = req.body;
+        const { titre, desبc, date_pub, date_exp } = req.body;
         const offer = new Offer({
             titre,
             desc,

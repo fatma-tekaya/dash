@@ -1,27 +1,27 @@
-import  mongoose  from  "mongoose";
+import mongoose from "mongoose";
 
-const offerSchema  = mongoose.Schema({
-    titre:{
-        type:String ,
+const offerSchema = mongoose.Schema({
+    titre: {
+        type: String,
         require: true,
     },
-    desc:{
-        type:String ,
+    desc: {
+        type: String,
         require: true,
     },
-    date_pub:{
-        type:String ,
+    date_pub: {
+        type: String,
         require: true,
     },
-    date_exp:{
+    date_exp: {
         type: String,
         require: true,
     },
 
-},{
-    timestamps:true
+}, {
+    timestamps: true
 });
 
 
-const   Offer = mongoose.model('Offer',offerSchema);
+const Offer = mongoose.model('Offer', offerSchema);
 export default Offer;
