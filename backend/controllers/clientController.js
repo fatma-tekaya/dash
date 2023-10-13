@@ -28,7 +28,7 @@ const addClient = asyncHandler(async (req, res) => {
                 reponses: reponses
             });
 
-            // console.log(question.titre)
+       
             await Nquestion.save();
             res.status(201).json("question ajouté");
             projet.totalreponse.push(Nquestion);
