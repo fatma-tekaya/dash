@@ -12,9 +12,9 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import SchoolIcon from '@mui/icons-material/School';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-import person  from '../../assets/user.png'
-import logo  from '../../assets/logo.png'
-import { useSelector,useDispatch } from "react-redux";
+import person from '../../assets/user.png'
+import logo from '../../assets/logo.png'
+import { useSelector, useDispatch } from "react-redux";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -39,34 +39,34 @@ const Sidebar = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [selected, setSelected] = useState("Dashboard");
-  const {userInfo} =useSelector((state)=>state.auth)
+  const { userInfo } = useSelector((state) => state.auth)
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
 
   return (
     <Box
-    className="sidebar"
-    
-    sx={{
-   
-        
-      "& .pro-sidebar-inner": {
-        background: `${colors.primary[400]} !important`,
-      },
-      "& .pro-icon-wrapper": {
-        backgroundColor: "transparent !important",
-      },
-      "& .pro-inner-item": {
-        padding: "5px 35px 5px 20px !important",
-      },
-      "& .pro-inner-item:hover": {
-        color: "#868dfb !important",
-      },
-      "& .pro-menu-item.active": {
-        color: "#6870fa !important",
-      },
-    }}
+      className="sidebar"
+
+      sx={{
+
+
+        "& .pro-sidebar-inner": {
+          background: `${colors.primary[400]} !important`,
+        },
+        "& .pro-icon-wrapper": {
+          backgroundColor: "transparent !important",
+        },
+        "& .pro-inner-item": {
+          padding: "5px 35px 5px 20px !important",
+        },
+        "& .pro-inner-item:hover": {
+          color: "#868dfb !important",
+        },
+        "& .pro-menu-item.active": {
+          color: "#6870fa !important",
+        },
+      }}
     >
       <ProSidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
@@ -86,7 +86,7 @@ const Sidebar = () => {
                 alignItems="center"
                 ml="15px"
               >
-           <img
+                <img
                   alt="profile-user"
                   width="130px"
                   height="50px"
@@ -118,7 +118,7 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  {userInfo.name} 
+                  {userInfo.name}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
                   Dev
@@ -136,12 +136,12 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-<Typography
-          variant="body1"
-          align="center"
-          color={colors.grey[300]}
-          sx={{ margin: "auto" }}
-        >
+            <Typography
+              variant="body1"
+              align="center"
+              color={colors.grey[300]}
+              sx={{ margin: "auto" }}
+            >
               Data
             </Typography>
             <Item
@@ -149,29 +149,44 @@ const Sidebar = () => {
               to="/Eleves"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
-              setSelected={setSelected}Elèves
+              setSelected={setSelected} Elèves
             />
-           {isCollapsed &&     <Typography
-          variant="body1"
-          align="center"
-          color={colors.grey[300]}
-          sx={{ margin: "auto" }}
-        >
+            {isCollapsed && <Typography
+              variant="body1"
+              align="center"
+              color={colors.grey[300]}
+              sx={{ margin: "auto" }}
+            >
               Elèves
+            </Typography>}
+            <Item
+              title="Offers"
+              to="/offers"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected} Offers
+            />
+            {isCollapsed && <Typography
+              variant="body1"
+              align="center"
+              color={colors.grey[300]}
+              sx={{ margin: "auto" }}
+            >
+              Offers
             </Typography>}
             <Item
               title="Parents"
               to="/Parents"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
-              setSelected={setSelected}Elèves
+              setSelected={setSelected} Elèves
             />
-           {isCollapsed &&     <Typography
-          variant="body1"
-          align="center"
-          color={colors.grey[300]}
-          sx={{ margin: "auto" }}
-        >
+            {isCollapsed && <Typography
+              variant="body1"
+              align="center"
+              color={colors.grey[300]}
+              sx={{ margin: "auto" }}
+            >
               Parents
             </Typography>}
             <Item
@@ -180,15 +195,15 @@ const Sidebar = () => {
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />    
-             {isCollapsed &&      <Typography
-            variant="body1"
-            align="center"
-            color={colors.grey[300]}
-            sx={{ margin: "auto" }}
-          >
-            Enseignants
-          </Typography>}
+            />
+            {isCollapsed && <Typography
+              variant="body1"
+              align="center"
+              color={colors.grey[300]}
+              sx={{ margin: "auto" }}
+            >
+              Enseignants
+            </Typography>}
             <Item
               title="Informations générale de site"
               to="/InfoGenrale"
@@ -196,29 +211,29 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-                      {isCollapsed &&        <Typography
-          variant="body1"
-          align="center"
-          color={colors.grey[300]}
-          sx={{ margin: "auto" }}
-        >
-          Info
-        </Typography>}
-       <Item
+            {isCollapsed && <Typography
+              variant="body1"
+              align="center"
+              color={colors.grey[300]}
+              sx={{ margin: "auto" }}
+            >
+              Info
+            </Typography>}
+            <Item
               title="Categories"
               to="/Categories"
               icon={<MapOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-                {isCollapsed &&     <Typography
-          variant="body1"
-          align="center"
-          color={colors.grey[300]}
-          sx={{ margin: "auto" }}
-        >
-            Catégories
-          </Typography>}
+            {isCollapsed && <Typography
+              variant="body1"
+              align="center"
+              color={colors.grey[300]}
+              sx={{ margin: "auto" }}
+            >
+              Catégories
+            </Typography>}
             <Item
               title="Formations"
               to="/Formations"
@@ -226,18 +241,18 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-        {isCollapsed && <Typography
-          variant="body1"
-          align="center"
-          color={colors.grey[300]}
-          sx={{ margin: "auto" }}
-        >
-            Formations
-          </Typography>}
+            {isCollapsed && <Typography
+              variant="body1"
+              align="center"
+              color={colors.grey[300]}
+              sx={{ margin: "auto" }}
+            >
+              Formations
+            </Typography>}
           </Box>
         </Menu>
       </ProSidebar>
-     
+
     </Box>
   );
 };

@@ -164,7 +164,7 @@ const DetailsParent = () => {
               <Typography
                 variant="h5"
                 color={colors.grey[100]}
-                sx={{ mt: "15px ", width: "100%", width: "100%" }}
+                sx={{ mt: "15px ", width: "100%" }}
               >
                 {numtel}
               </Typography>
