@@ -1,178 +1,235 @@
-import React, { useState, useEffect } from "react";
+import React from 'react'
 import {
   Box,
   Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  IconButton,
+  TextField,
+  
+  Typography,
+  
+  Alert,
 } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import Header from "../../components/Header";
-import Loader from "../../components/Loader";
-import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
-import { useGetedMutation, useDeleteMutation } from "../../slices/InfoApiSlice";
-import DeleteSweepOutlinedIcon from "@mui/icons-material/DeleteSweepOutlined";
-import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
-import { useTheme } from "@emotion/react";
 
-const InfoGenrale = () => {
-  const navigate = useNavigate();
-  const [deleteRowId, setDeleteRowId] = useState(null);
-  const [data, setData] = useState([]);
-  const [getData, { isLoading }] = useGetedMutation();
-  const [supprim, { isLoadingg }] = useDeleteMutation();
-  const theme = useTheme();
 
-  useEffect(() => {
-    const getHandler = async () => {
-      try {
-        const info = await getData();
+const index = () => {
+  // const isNonMobile = useMediaQuery("(min-width:600px)");
+  // const theme = useTheme();
+  // const colors = tokens(theme.palette.mode);
+  // const location = useLocation();
 
-        const modifiedData = info.data.map((item) => ({
-          ...item,
-          id: item._id,
-        }));
-        setData(modifiedData);
-        console.log(data)
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  // const isNonMobile = useMediaQuery("(min-width:600px)");
+  // const theme = useTheme();
+  // const colors = tokens(theme.palette.mode);
+  // const location = useLocation();
+  // const params = new URLSearchParams(location.search);
+  //const data = params.get("data");
+  // const [titre, settitre] = useState();
+  // const [description, setdescription] = useState();
+  // const [adresse, setadresse] = useState();
+  // const [facebook, setfacebook] = useState();
+  // const [linkedin, setlinkedin] = useState();
+  // const [twiter, settwiter] = useState();
+  // const [numtel, setnumtel] = useState();
+  // const [email, setemail] = useState();
+  
+  // const [err, seterr] = useState(null);
+  // const navigate = useNavigate();
+  // const dispatch = useDispatch();
 
-    getHandler();
-  }, []);
+  // const [update, { isLoading }] = useUpdateMutation();
 
-  const supprimer = async () => {
-    try {
-      await supprim(deleteRowId).unwrap();
-      setData((prevRows) => prevRows.filter((row) => row.id !== deleteRowId));
-      setDeleteRowId(null);
-      toast.success("Successfully deleted!");
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
-    }
-  };
+  // const { siteInfo } = useSelector((state) => state.auth);
 
-  const edit = async (objet) => {
-    const encodedData = encodeURIComponent(JSON.stringify(objet));
-    navigate(`/edit?data=${encodedData}`);
-  };
+  // useEffect(() => {
+  //   axios.get('api/info/get')
+  //     .then((response) => {
+  //       // Traitez les données reçues ici (par exemple, stockez-les dans l'état local)
+  //       const data = response.data;
+  //       // Utilisez setState ou useState pour mettre à jour les données dans le composant
+  //       setFormData(data);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Erreur lors de la récupération des données :', error);
+  //     });
+  // }, [data]);
+  // const onSubmit = async (e, id) => {
+  //   e.preventDefault();
 
-  const columns = [
-    {
-      flex: 1,
-      field: "titre",
-      headerName: "Titre",
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "description",
-      flex: 1,
-      headerName: "Description",
-    },
-    {
-      field: "numtel",
-      headerName: "Numéro tel",
-      flex: 1,
-    },
-    {
-      field: "actions",
-      headerName: "Actions",
-      width: 200,
-      renderCell: (params) => {
-        const rowId = params.row.id;
-        return (
-          <div>
-            <span onClick={() => setDeleteRowId(rowId)}>
-              <DeleteSweepOutlinedIcon className="action-icon" />
-            </span>
-            <span onClick={() => edit(params.row)}>
-              <EditNoteOutlinedIcon className="action-icon" />
-            </span>
-          </div>
-        );
-      },
-    },
-  ];
+  //   try {
+  //     const response = await axios.put(`/api/info/${id}`, editData);
 
+  //     setData((prevData) => {
+  //       return prevData.map((item) => {
+  //         if (item._id === id) {
+  //           return {
+  //             _id: editData._id,
+  //             titre: editData.titre,
+  //             desc: editData.desc,
+  //             date_pub: editData.date_pub,
+  //             date_exp: editData.date_exp
+  //           };
+
+  //         } else {
+  //           return item;
+  //         }
+  //       });
+  //     });
+  //     handleClose2(true)
+  //     // setData((prevRows) => prevRows.map((row) => (row._id === id ? updatedData : row)));
+  //     setShowAlert(false);
+  //     setShowAlertEdit(true);
+
+  //     // if (passwordConfirm != password) {
+  //     //   seterr("Passwrd confirm inccorect");
+  //     // } else {
+  //     //   const res = await update({ name, email, password }).unwrap();
+  //     //   dispatch(setCredentials({ ...res }));
+  //     //   navigate("/");
+  //     // }
+  //   } catch (err) {
+  //     seterr(err.data.message);
+  //   }
+  // };
   return (
-    <div className="main-banner">
-      <Box m="20px">
-        <Header title="Informations générales du site" />
-        {isLoading && <Loader />}
-        <Box
-          m="40px 0 0 0"
-          height="75vh"
-          sx={{
-            "& .MuiDataGrid-root": {
-              border: "none",
-            },
-            "& .MuiDataGrid-cell": {
-              borderBottom: "none",
-            },
-            "& .name-column--cell": {
-              color: tokens(theme.palette.mode).greenAccent[300],
-            },
-            "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: tokens(theme.palette.mode).blueAccent[500],
-              borderBottom: "none",
-            },
-            "& .MuiDataGrid-virtualScroller": {
-              backgroundColor: tokens(theme.palette.mode).primary[400],
-            },
-            "& .MuiDataGrid-footerContainer": {
-              borderTop: "none",
-              backgroundColor: tokens(theme.palette.mode).blueAccent[500],
-            },
-            "& .MuiCheckbox-root": {
-              color: tokens(theme.palette.mode).greenAccent[200] + " !important",
-            },
-            "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-              color: tokens(theme.palette.mode).grey[100] + " !important",
-            },
-          }}
+    <div className='row justify-content-center'> 
+
+      {/* <Box m="2% 5% 0 10%" height="100vh">
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <Typography
+          variant="h2"
+          color={colors.grey[100]}
+          fontWeight="bold"
+          sx={{ mb: "5px" }}
         >
-          {data.length === 0 ? (
-            <div className="d-flex justify-content-end">
-              <Link to="/add">
-                <Button variant="contained" color="info">
-                  Ajouter
-                </Button>
-              </Link>
-            </div>
-          ) : (
-            ""
-          )}
-          <DataGrid
-            rows={data}
-            columns={columns}
-            components={{ Toolbar: GridToolbar }}
-          />
-          <Dialog open={!!deleteRowId} onClose={() => setDeleteRowId(null)}>
-            <DialogTitle>Confirmer la suppression</DialogTitle>
-            <DialogContent>
-              Êtes-vous certain(e) de vouloir supprimer cette ligne ?
-            </DialogContent>
-            <DialogActions>
-              <Button
-                onClick={() => setDeleteRowId(null)}
-                color="primary"
+          Aliret Corrdonnée
+        </Typography>
+      </Box>
+      <Box>
+        <Box justifyContent="center" alignItems="center" sx={{ mb: "25px" }}>
+          <Box
+            sx={{ borderRadius: "10px", border: "1px solid black" }}
+            justifyContent="center"
+            alignItems="center"
+          >
+            {err != null ? (
+              <Box sx={{ mb: "14px" }}>
+                <Alert severity="error">{err}</Alert>
+              </Box>
+            ) : (
+              ""
+            )}
+
+            <form onSubmit={onSubmit}>
+              <Box
+                padding="15px"
+                display="grid"
+                gap="30px"
+                gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                sx={{
+                  "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+                }}
               >
-                Annuler
-              </Button>
-              <Button onClick={supprimer} color="secondary">
-                Supprimer
-              </Button>
-            </DialogActions>
-          </Dialog>
+                <TextField
+
+                  fullWidth
+                  type="text"
+                  label="id"
+                  hidden
+                  // value={_id}
+                  name="titre"
+
+                  sx={{ gridColumn: "span 4" }}
+                />
+                <TextField
+                  fullWidth
+                  type="text"
+                  label="Titre"
+                  required
+                  // value={titre}
+                  name="titre"
+                  sx={{ gridColumn: "span 4" }}
+                />
+
+                <TextField
+                  required
+                  fullWidth
+                  type="text"
+                  label="Description"
+                  // onChange={(e) => setemail(e.target.value)}
+                  // value={email}
+                  name="desc"
+                  sx={{ gridColumn: "span 4" }}
+                />
+                <TextField
+                  required
+                  fullWidth
+                  type="text"
+                  label="Adresse"
+                
+                  name="adress"
+                  sx={{ gridColumn: "span 4" }}
+                />
+                <TextField
+                  required
+                  fullWidth
+                  type="text"
+                  label="Email"
+                  
+                  name="email"
+                  sx={{ gridColumn: "span 4" }}
+                />
+                <TextField
+                  required
+                  fullWidth
+                  type="text"
+                  label="Numéro du téléphone"
+                 
+                  name="num"
+                  sx={{ gridColumn: "span 4" }}
+                />
+                 <TextField
+                  required
+                  fullWidth
+                  type="text"
+                  label="Facebook"
+                  
+                  name="Facebook"
+                  sx={{ gridColumn: "span 4" }}
+                />
+                  <TextField
+                  required
+                  fullWidth
+                  type="text"
+                  label="Linkedin"
+                  
+                  name="Linkedin"
+                  sx={{ gridColumn: "span 4" }}
+                />
+                  <TextField
+                  required
+                  fullWidth
+                  type="text"
+                  label="Twiter"
+                 
+                  name="Twiter"
+                  sx={{ gridColumn: "span 4" }}
+                />
+                
+              
+              </Box>
+              <Box display="flex" justifyContent="end" padding="15px">
+                <Button type="submit" color="info" variant="contained">
+                  Modifier
+                </Button>
+              </Box>
+            </form>
+          </Box>
         </Box>
       </Box>
+    </Box> */}
+      info
     </div>
-  );
-};
+  )
+}
 
-export default InfoGenrale;
+export default index
