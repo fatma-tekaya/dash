@@ -9,7 +9,7 @@ const index = () => {
 
   useEffect(() => {
     
-    axios.get('http://localhost:8000/api/offer/')
+    axios.get('api/offer/')
       .then(response => {
         setData(response.data);
       })
