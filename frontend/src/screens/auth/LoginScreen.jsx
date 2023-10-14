@@ -7,7 +7,7 @@ import { setCredentials } from '../../slices/authSlice';
 import Loader from '../../components/Loader';
 import { Alert, Box, useTheme } from "@mui/material";
 import Footer from "../global/Footer";
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo.jpeg';
 import { tokens } from "../../theme";
 import { FormContainer } from "../../components/formContainer";
 const LoginScreen = () => {
@@ -43,12 +43,14 @@ const LoginScreen = () => {
     <>
       <div className="m-5 mx-2 ">
         <FormContainer>
+          <div className="row justify-content-center">
           <img
             alt="Logo"
-            height="100px"
+            className="rounded rounded-circle w-50"
             src={logo}
             style={{ cursor: "pointer", marginBottom: "15px" }}
           />
+          </div>
           {err != null ? (
             <Box sx={{ mb: '14px' }}>
               <Alert severity="error">{err}</Alert>
@@ -81,16 +83,12 @@ const LoginScreen = () => {
               </Col>
             </Row>
             {isLoading && <Loader />}
-           
-
-
             <div className="buttons">
-                        
-                        <Button type='submit' variant='primary' className='mt-3 '>
-                        Connexion
-                        </Button>
-                        
-                        </div>
+              <Button type='submit' variant='teal' className='mt-3 ' style={{backgroundColor:"teal" ,color:"white"}}>
+                Connexion
+              </Button>
+
+            </div>
           </Form>
         </FormContainer>
       </div>

@@ -4,17 +4,12 @@ import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import SchoolIcon from '@mui/icons-material/School';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-import person from '../../assets/user.png'
-import logo from '../../assets/logo.png'
+
+import logo from '../../assets/logo.jpeg'
 import { useSelector, useDispatch } from "react-redux";
+import { PiBagSimple, PiLinkLight, PiSignOutThin, PiUserListLight, PiUsersThreeThin, PiChartLineLight, PiDiamondsFourLight } from "react-icons/pi";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -35,6 +30,17 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 };
 
 const Sidebar = () => {
+  const logoutHandler = async () => {
+    console.log("hi22");
+    try {
+      console.log("hii");
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -87,9 +93,9 @@ const Sidebar = () => {
                 ml="15px"
               >
                 <img
-                  alt="profile-user"
-                  width="130px"
-                  height="50px"
+                  className="rounded rounded-circle w-50"
+                  alt="logo"
+
                   src={logo}
                   style={{ cursor: "pointer", }}
                 />
@@ -102,15 +108,7 @@ const Sidebar = () => {
 
           {!isCollapsed && (
             <Box mb="25px">
-              <Box display="flex" justifyContent="center" alignItems="center">
-                <img
-                  alt="profile-user"
-                  width="100px"
-                  height="100px"
-                  src={person}
-                  style={{ cursor: "pointer", borderRadius: "50%" }}
-                />
-              </Box>
+
               <Box textAlign="center">
                 <Typography
                   variant="h5"
@@ -120,9 +118,6 @@ const Sidebar = () => {
                 >
                   {userInfo.name}
                 </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
-                  Dev
-                </Typography>
               </Box>
             </Box>
           )}
@@ -130,39 +125,24 @@ const Sidebar = () => {
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
-              to="/"
-              icon={<HomeOutlinedIcon />}
+              to="/dashboard"
+              icon={<PiDiamondsFourLight size={20} />}
               selected={selected}
               setSelected={setSelected}
             />
 
-            <Typography
-              variant="body1"
-              align="center"
-              color={colors.grey[300]}
-              sx={{ margin: "auto" }}
-            >
-              Data
-            </Typography>
-            <Item
-              title="Elèves"
-              to="/Eleves"
-              icon={<PeopleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected} Elèves
-            />
             {isCollapsed && <Typography
               variant="body1"
               align="center"
               color={colors.grey[300]}
               sx={{ margin: "auto" }}
             >
-              Elèves
-            </Typography>}
+              Dash
+            </Typography> } 
             <Item
               title="Offers"
               to="/offers"
-              icon={<PeopleOutlinedIcon />}
+              icon={<PiBagSimple size={20} />}
               selected={selected}
               setSelected={setSelected} Offers
             />
@@ -175,11 +155,11 @@ const Sidebar = () => {
               Offers
             </Typography>}
             <Item
-              title="Parents"
-              to="/Parents"
-              icon={<PeopleOutlinedIcon />}
+              title="Condidats"
+              to="/condidats"
+              icon={<PiUsersThreeThin size={20} />}
               selected={selected}
-              setSelected={setSelected} Elèves
+              setSelected={setSelected} Condidats
             />
             {isCollapsed && <Typography
               variant="body1"
@@ -187,12 +167,12 @@ const Sidebar = () => {
               color={colors.grey[300]}
               sx={{ margin: "auto" }}
             >
-              Parents
+              Condidats
             </Typography>}
             <Item
-              title="Enseignants"
-              to="/Enseignants"
-              icon={<ContactsOutlinedIcon />}
+              title="Projets"
+              to="/projets"
+              icon={<PiChartLineLight size={20} />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -202,12 +182,12 @@ const Sidebar = () => {
               color={colors.grey[300]}
               sx={{ margin: "auto" }}
             >
-              Enseignants
+              Projets
             </Typography>}
             <Item
-              title="Informations générale de site"
+              title="Informations de site"
               to="/InfoGenrale"
-              icon={<ReceiptOutlinedIcon />}
+              icon={<PiLinkLight size={20} />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -220,9 +200,9 @@ const Sidebar = () => {
               Info
             </Typography>}
             <Item
-              title="Categories"
-              to="/Categories"
-              icon={<MapOutlinedIcon />}
+              title="Profile"
+              to="/Profile"
+              icon={<PiUserListLight size={20} />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -232,12 +212,13 @@ const Sidebar = () => {
               color={colors.grey[300]}
               sx={{ margin: "auto" }}
             >
-              Catégories
+              Profile
             </Typography>}
             <Item
-              title="Formations"
-              to="/Formations"
-              icon={<SchoolIcon />}
+              title="Déconnecter"
+              onClick={logoutHandler}
+              to="/login"
+              icon={<PiSignOutThin size={20} />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -247,7 +228,7 @@ const Sidebar = () => {
               color={colors.grey[300]}
               sx={{ margin: "auto" }}
             >
-              Formations
+              Déconnecter
             </Typography>}
           </Box>
         </Menu>

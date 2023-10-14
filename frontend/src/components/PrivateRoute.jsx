@@ -13,7 +13,7 @@ const PrivateRoute = () => {
     <div className="app" >
     <Sidebar/>
     <main className="content">
-    <Topbar  />
+ {/* <Topbar  /> */}
     <Outlet /> 
  
     </main>

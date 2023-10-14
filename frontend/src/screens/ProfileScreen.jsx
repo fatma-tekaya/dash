@@ -16,8 +16,6 @@ import { tokens } from "../theme";
 import { useSelector, useDispatch } from "react-redux";
 import { useUpdateMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
-
-import person from "../assets/user.png";
 export const ProfileScreen = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const theme = useTheme();
@@ -65,16 +63,7 @@ export const ProfileScreen = () => {
   };
   return (
     <Box m="2% 5% 0 10%" height="100vh">
-      <Box display="flex" justifyContent="center" alignItems="center">
-        <img
-          alt="profile-user"
-          width="200px"
-          height="200px"
-          src={person}
-          style={{ cursor: "pointer", borderRadius: "50%" }}
-        />
-      </Box>
-
+      
       <Box display="flex" justifyContent="center" alignItems="center">
         <Typography
           variant="h2"
@@ -88,7 +77,7 @@ export const ProfileScreen = () => {
 
       <Box display="flex" justifyContent="center" alignItems="center">
         <Typography variant="h5" color={colors.greenAccent[400]}>
-          Admin
+          Administrateur
         </Typography>
         <Divider sx={{ height: 3, m: "20px" }} color={colors.grey[300]} />
       </Box>

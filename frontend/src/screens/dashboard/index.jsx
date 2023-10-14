@@ -8,10 +8,10 @@ const Dashboard = () => {
     <div className="main-banner">
       <Box>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+          <Header title="DASHBOARD" subtitle="Your dashboard" />
         </Box>
       </Box>
-      <Footer />
+      
     </div>
   );
 };

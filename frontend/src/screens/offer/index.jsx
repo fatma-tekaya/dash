@@ -22,6 +22,7 @@ const index = () => {
   //get all offre
   const [data, setData] = useState([]);
   useEffect(() => {
+    
     axios.get('api/offer/')
       .then(response => {
         setData(response.data);
@@ -34,9 +35,9 @@ const index = () => {
   //add offre
   const [formData, setFormData] = useState({
     titre: '',
-    description: '',
-    datepub: '',
-    dateexp: ''
+    desc: '',
+    date_pub: '',
+    date_exp: ''
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,15 +49,24 @@ const index = () => {
     e.preventDefault();
     try {
       const response = await axios.post('api/offer/', formData);
-      navigate('/offers');
-      e.target.reset();
-      // Réinitialisez d'autres champs ici
+      // navigate('/offers');
+      // e.target.reset();
+  
       setFormData({
         titre: '',
         desc: '',
-        datepub: '',
-        dateexp: ''
+        date_pub: '',
+        date_exp: ''
       });
+      setData((prevRows) => [
+        ...prevRows,
+        { _id:response.data._id, 
+          titre: formData.titre,
+        desc: formData.desc,
+        date_pub:formData.date_pub,
+        date_exp:formData.date_exp,
+        /* Other properties you want to add */ }
+      ]);
       setShowAlertAdd(true);
     } catch (error) {
       console.error(error);
@@ -66,18 +76,34 @@ const index = () => {
   //edit
   const [editData, seteditData] = useState({});
   const [isUpdated, setIsUpdated] = useState(false);
-  const handleUpdate = (id) => {
+  const handleUpdate = async (e, id) => {
+    e.preventDefault();
     try {
-     // console.log(id);
-      axios.put(`/api/offer/${id}`, editData)
-        .then(() => {
-          setIsUpdated(true);
+      const response = await axios.put(`/api/offer/${id}`, editData);
+     
+      setData((prevData) => {
+        return prevData.map((item) => {
+          if (item._id === id) {
+            return {
+              _id:editData._id,
+              titre: editData.titre,
+              desc: editData.desc,
+              date_pub: editData.date_pub,
+              date_exp: editData.date_exp
+            };
+            
+          } else {
+            return item;
+          }
         });
-      setShowAlertEdit(true);
-      //console.log("offer updated");
+      });
+      handleClose2(true)
+      // setData((prevRows) => prevRows.map((row) => (row._id === id ? updatedData : row)));
+      setShowAlert(false);
+      setShowAlertEdit(true); // Show the edit alert
     } catch (error) {
       console.error('Erreur lors de la mise à jour :', error);
-    };
+    }
   };
 
   //delete
@@ -89,10 +115,12 @@ const index = () => {
       if (isConfirmed) {
         // Supprimer l'élément en faisant une requête DELETE
         axios.delete(`api/offer/${id}`).then((response) => {
-          // Actualisez les données après la suppression
-          setData(response.data.filter(item => item.id !== id));
+         setData((prevRows) => prevRows.filter((row) => row._id !== id));
+
         });
-        location.reload();
+        setShowAlertEdit(false);
+        setShowAlert(true);
+        // location.reload();
         // setTimeout(() => {
         //   setShowAlert(true);
         // }, 20); 
@@ -121,8 +149,14 @@ const index = () => {
         </div>
         <div className='row'>
         {/* alert */}
-        <Alert show={showAlertEdit} variant="success">
+        <Alert show={showAlert} variant="success">
           Offre supprimer avec succès
+          <button onClick={() => setShowAlert(false)} className="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </Alert>
+        <Alert show={showAlertEdit} variant="success">
+          Offre modifier avec succès
           <button onClick={() => setShowAlertEdit(false)} className="close" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -172,7 +206,7 @@ const index = () => {
               <Modal.Title>Modifier un offre </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <form onSubmit={() => { handleUpdate(editData._id) }
+              <form onSubmit={(e) => { handleUpdate(e,editData._id)   }
 
               }>
                 <div className="form-floating mb-3">
@@ -186,14 +220,14 @@ const index = () => {
                   <label htmlFor="desc">Description</label>
                 </div>
                 <div className="form-floating mb-3">
-                  <input type='date' className="form-control" id="datepub" name="date_pub" value={editData.date_pub}
+                  <input type='date' className="form-control" id="date_pub" name="date_pub" value={editData.date_pub}
                     onChange={(e) => seteditData({ ...editData, date_pub: e.target.value })} />
-                  <label htmlFor="datepub">Date publication</label>
+                  <label htmlFor="date_pub">Date publication</label>
                 </div>
                 <div className="form-floating ">
-                  <input type='date' className="form-control" id="dateexp" name="date_exp" value={editData.date_exp}
+                  <input type='date' className="form-control" id="date_exp" name="date_exp" value={editData.date_exp}
                     onChange={(e) => seteditData({ ...editData, date_exp: e.target.value })} />
-                  <label htmlFor="dateexp">Date expiration</label>
+                  <label htmlFor="date_exp">Date expiration</label>
                 </div>
 
                 <div className='row justify-content-end align-items-end'>
@@ -208,19 +242,19 @@ const index = () => {
               </form>
             </Modal.Body>
 
-            <Modal.Footer>
-              <div className='row'>
+             <Modal.Footer>
+              {/* <div className='row'>
                 <Alert show={showAlertEdit} variant="success">
                   Offre modifier avec succès.
                   <button onClick={handleClose} className="close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </Alert>
-              </div>
-            </Modal.Footer>
+              </div> */}
+            </Modal.Footer> 
           </Modal>
 
-          {/* Model Box add Finsihs */}
+          {/* Model Box edit Finsihs */}
         </div>
         {/* <!--- Model Box Add---> */}
         <div className="model_box">
@@ -246,14 +280,14 @@ const index = () => {
                   <label htmlFor="description">Description</label>
                 </div>
                 <div className="form-floating mb-3">
-                  <input type='date' className="form-control" id="datepub" name="date_pub" value={formData.date_pub}
+                  <input type='date' className="form-control" id="date_pub" name="date_pub" value={formData.date_pub}
                     onChange={handleChange} required />
-                  <label htmlFor="datepub">Date publication</label>
+                  <label htmlFor="date_pub">Date publication</label>
                 </div>
                 <div className="form-floating ">
-                  <input type='date' className="form-control" id="dateexp" name="date_exp" value={formData.date_exp}
+                  <input type='date' className="form-control" id="date_exp" name="date_exp" value={formData.date_exp}
                     onChange={handleChange} required />
-                  <label htmlFor="dateexp">Date expiration</label>
+                  <label htmlFor="date_exp">Date expiration</label>
                 </div>
 
                 <div className='row justify-content-end align-items-end'>
