@@ -10,7 +10,9 @@ const index = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [editshow, seteditShow] = useState(false);
-
+  const [showAlertAdd, setShowAlertAdd] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [showAlertEdit, setShowAlertEdit] = useState(false);
   const handleClose = () => setShow(false);
   const handleClose2 = () => seteditShow(false);
   const handleShow1 = () => setShow(true);
@@ -47,7 +49,15 @@ const index = () => {
     try {
       const response = await axios.post('api/offer/', formData);
       navigate('/offers');
-      setShowAlert(true);
+      e.target.reset();
+      // Réinitialisez d'autres champs ici
+      setFormData({
+        titre: '',
+        desc: '',
+        datepub: '',
+        dateexp: ''
+      });
+      setShowAlertAdd(true);
     } catch (error) {
       console.error(error);
     }
@@ -58,13 +68,13 @@ const index = () => {
   const [isUpdated, setIsUpdated] = useState(false);
   const handleUpdate = (id) => {
     try {
-      console.log(id);
+     // console.log(id);
       axios.put(`/api/offer/${id}`, editData)
         .then(() => {
           setIsUpdated(true);
         });
-      setShowAlert(true);
-      console.log("offer updated");
+      setShowAlertEdit(true);
+      //console.log("offer updated");
     } catch (error) {
       console.error('Erreur lors de la mise à jour :', error);
     };
@@ -72,26 +82,28 @@ const index = () => {
 
   //delete
 
-  const [showAlert, setShowAlert] = useState(false);
   const handleDelete = (id) => {
     try {
 
-      const isConfirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cet offre ?");
+      const isConfirmed = window.confirm("Êtes-vous sûr de supprimer cet offre ?");
       if (isConfirmed) {
         // Supprimer l'élément en faisant une requête DELETE
         axios.delete(`api/offer/${id}`).then((response) => {
           // Actualisez les données après la suppression
           setData(response.data.filter(item => item.id !== id));
         });
-        window.location.reload();
-        setShowAlert(true);
+        location.reload();
+        // setTimeout(() => {
+        //   setShowAlert(true);
+        // }, 20); 
+       
       }
     } catch (error) {
       console.error(error);
     }
 
   };
-  
+
 
   return (
     <div className="container ">
@@ -107,13 +119,15 @@ const index = () => {
             </Button>
           </div>
         </div>
+        <div className='row'>
         {/* alert */}
-        <Alert show={showAlert} variant="success">
-          Cette action a été fait avec succès
-          <button onClick={() => setShowAlert(false)} className="close" aria-label="Close">
+        <Alert show={showAlertEdit} variant="success">
+          Offre supprimer avec succès
+          <button onClick={() => setShowAlertEdit(false)} className="close" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </Alert>
+        </div>
         <div className="row">
           <div className="table-responsive " >
             <table className="table table-striped table-hover table-bordered">
@@ -167,9 +181,9 @@ const index = () => {
                   <label htmlFor="titre">Titre</label>
                 </div>
                 <div className="form-floating mb-3">
-                  <textarea className="form-control" id="description" name="desc" placeholder='' required value={editData.desc}
+                  <textarea className="form-control" id="desc" name="desc" placeholder='' required value={editData.desc}
                     onChange={(e) => seteditData({ ...editData, desc: e.target.value })}></textarea>
-                  <label htmlFor="description">Description</label>
+                  <label htmlFor="desc">Description</label>
                 </div>
                 <div className="form-floating mb-3">
                   <input type='date' className="form-control" id="datepub" name="date_pub" value={editData.date_pub}
@@ -195,9 +209,14 @@ const index = () => {
             </Modal.Body>
 
             <Modal.Footer>
-              <button type="submit" onClick={handleClose2} className="btn btn-secondary mt-4" >
-                Close
-              </button>
+              <div className='row'>
+                <Alert show={showAlertEdit} variant="success">
+                  Offre modifier avec succès.
+                  <button onClick={handleClose} className="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </Alert>
+              </div>
             </Modal.Footer>
           </Modal>
 
@@ -238,8 +257,8 @@ const index = () => {
                 </div>
 
                 <div className='row justify-content-end align-items-end'>
-                  <div className="col d-flex">
-                    <button type="submit" className="btn btn-success mt-4 me-3" >
+                  <div className="col ">
+                    <button type="submit" className="btn btn-success mt-4 " >
                       Ajouter
                     </button>
                   </div>
@@ -250,9 +269,14 @@ const index = () => {
             </Modal.Body>
 
             <Modal.Footer>
-              <button type="submit" onClick={handleClose} className="btn btn-secondary mt-4" >
-                Close
-              </button>
+              <div className='row'>
+                <Alert show={showAlertAdd} variant="success">
+                  Offre ajouter avec succès! Si vous voulez vous pouvez ajouter un autre offre.
+                  <button onClick={() => setShowAlertAdd(false)} className="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </Alert>
+              </div>
             </Modal.Footer>
           </Modal>
 

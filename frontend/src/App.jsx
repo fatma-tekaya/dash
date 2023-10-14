@@ -33,6 +33,7 @@ import NotFound from "./screens/global/NotFound";
 import Parents from "./screens/Parents";
 import DetailsParent from "./screens/Parents/details";
 import Offers from './screens/offer';
+import Condidats from "./screens/condidat";
 
 const App = () => {
   const [theme, colorMode] = useMode();
@@ -49,15 +50,13 @@ const App = () => {
           <Route path='/resetPassword' element={<ResetPassword />} />
           <Route path='/enterCode' element={<EnterCode />} />
           <Route path='/newPassword' element={<NewPassword />} />
-          
-
-          
-
+    
 
           <Route path='/confirm/:activationCode' element={<ActivationPage />} />
           <Route path='/*' element={<NotFound />} />
 
           <Route path='/offers' element={<Offers />} />
+          <Route path='/condidats' element={<Condidats />} />
           <Route path='' element={<PrivateRoute />}>
             <Route path='/' element={<Eleves />} />
             {/* Eleves */}
