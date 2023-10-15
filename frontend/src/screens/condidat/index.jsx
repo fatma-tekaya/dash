@@ -41,6 +41,9 @@ const index = () => {
                   <th>NOM </th>
                   <th>PRENOM</th>
                   <th>EMAIL </th>
+                  <th>PHONE </th>
+                  <th>ADRESSE </th>
+                  <th>GENRE </th>
                   <th>LINKEDIN </th>
                   <th>CV</th>
                   <th>DETAILS</th>
@@ -53,10 +56,13 @@ const index = () => {
                     <td>{item.nom}</td>
                     <td>{item.prenom}</td>
                     <td>{item.email}</td>
+                    <th>{item.numtel} </th>
+                    <th>{item.address} </th>
+                    <th>{item.genre} </th>
                     <td>{item.linkedin}</td>
                     <td>{item.cv}</td>
                     <td>
-                      <a href="#" className="delete ms-3" title="Delete" data-toggle="tooltip" style={{ color: "bleu" }} onClick={() => {handleShow(); setdetailData(item);console.log(item._id)}}><AiOutlineIdcard size={25} /></a>
+                      <a href="#" className="delete ms-3" title="Delete" data-toggle="tooltip" style={{ color: "bleu" }} onClick={() => { handleShow(); setdetailData(item); console.log(item._id) }}><AiOutlineIdcard size={25} /></a>
                     </td>
                   </tr>
                 ))}
@@ -77,29 +83,29 @@ const index = () => {
             </Modal.Header>
             <Modal.Body>
 
-                <div className=" mb-3">
-                  <label >{detailData.nom}</label>
-                </div>
-                <div className=" mb-3">
-                  <label >{detailData.prenom}</label>
-                </div>
-                <div className=" mb-3">
-                  <label >{detailData.email}</label>
-                </div>
-                
-                <div className=" mb-3">
-                  <label >{detailData.linkedin}</label>
-                </div>
-                <div className=" mb-3">
-                  <label >{detailData.cv}</label>
-                </div>
-                
+              <div className=" mb-3">
+                <label >{detailData.nom}</label>
+              </div>
+              <div className=" mb-3">
+                <label >{detailData.prenom}</label>
+              </div>
+              <div className=" mb-3">
+                <label >{detailData.email}</label>
+              </div>
+
+              <div className=" mb-3">
+                <label >{detailData.linkedin}</label>
+              </div>
+              <div className=" mb-3">
+                <label >{detailData.cv}</label>
+              </div>
+
             </Modal.Body>
 
             <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
             </Modal.Footer>
           </Modal>
 
