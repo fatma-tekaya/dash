@@ -5,53 +5,56 @@ import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useUpdateMutation } from "../../slices/InfoApiSlice";
 import { toast } from "react-toastify";
+import axios from 'axios';
+import Alert from 'react-bootstrap/Alert';
 
 const Edit = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [titre, settitle] = useState("");
+  const [titre, settitre] = useState("");
   const [description, setdescription] = useState("");
   const [adresse, setadresse] = useState("");
   const [email, setemail] = useState("");
   const [numtel, setnumtel] = useState("");
   const [facebook, setfacebook] = useState("");
-  const [youtube, setyoutube] = useState("");
-  const [instgram, setinstgram] = useState("");
+  // const [youtube, setyoutube] = useState("");
+  // const [instgram, setinstgram] = useState("");
   const [linkedin, setlinkedin] = useState("");
   const [update, { isLoading }] = useUpdateMutation();
   const navigate = useNavigate();
-  const [ _id ,setid]=useState('');
-  
+  const [id, setid] = useState('');
+  const [show, setShow] = useState(false);
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const data = params.get('data');
-
+  const [data, setData] = useState([]);
   useEffect(() => {
     try {
-      if (data) {
-        const decodedData = JSON.parse(decodeURIComponent(data));
-        settitle(decodedData.titre);
-        setdescription(decodedData.description);
-        setadresse(decodedData.address);
-        setemail(decodedData.email);
-        setnumtel(decodedData.numtel);
-        setyoutube(decodedData.youtube);
-        setlinkedin(decodedData.linkedin);
-        setinstgram(decodedData.instgram);
-        setfacebook(decodedData.facebook);
-        setid(decodedData._id);
-      }
+      axios.get('api/info/get').then(response => {
+        const data = response.data;
+        settitre(data[0].titre);
+        setdescription(data[0].description);
+        setadresse(data[0].adresse);
+        setemail(data[0].email);
+        setnumtel(data[0].numtel);
+        setlinkedin(data[0].linkedin);
+        setfacebook(data[0].facebook);
+        setid(data[0]._id);
+        setData(data[0]);
+        //  console.log(data[0]);
+      })
     } catch (error) {
-      console.log(error);
+      console.error('Erreur lors de la récupération des données :', error);
     }
-  }, [data]);
+  }, []);
+
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await update({_id,titre,description,adresse,email,numtel,facebook,youtube,instgram,linkedin});
-      toast.success("Information modifiée avec succès.");
-      navigate('/InfoGenrale')
+      console.log(id);
+      const response = await axios.put(`/api/info/${id}`, data);
+
+      //toast.success("Information modifiée avec succès.");
+      setShow(true)
 
     } catch (err) {
       toast.error(err?.data?.message || err.error);
@@ -60,13 +63,19 @@ const Edit = () => {
 
   return (
     <Box m="2% 5% 0 10%" height="100vh"
- 
-    > 
+
+    >
       <Header
         title="Modifier Informations générales"
         subtitle="Modifier information générale"
       />
-
+      {/* alert */}
+      <Alert show={show} variant="success">
+        Informations modifier avec succès!
+        <button onClick={() => setShow(false)} className="close" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </Alert>
       <form onSubmit={handleFormSubmit}>
         <Box
           display="grid"
@@ -80,7 +89,7 @@ const Edit = () => {
             fullWidth
             type="text"
             label="Titre"
-            onChange={(e) => settitle(e.target.value)}
+            onChange={(e) => settitre(e.target.value)}
             value={titre}
             name="titre"
             sx={{ gridColumn: "span 4" }}
@@ -126,29 +135,11 @@ const Edit = () => {
           <TextField
             fullWidth
             type="text"
-            label="Youtube link"
-            onChange={(e) => setyoutube(e.target.value)}
-            value={youtube}
-            name="Youtube"
-            sx={{ gridColumn: "span 1" }}
-          />
-          <TextField
-            fullWidth
-            type="text"
             label="Facebook link"
             onChange={(e) => setfacebook(e.target.value)}
             value={facebook}
             name="facebook"
-            sx={{ gridColumn: "span 1" }}
-          />
-          <TextField
-            fullWidth
-            type="text"
-            label="Instagram link"
-            onChange={(e) => setinstgram(e.target.value)}
-            value={instgram}
-            name="instgram"
-            sx={{ gridColumn: "span 1" }}
+            sx={{ gridColumn: "span 2" }}
           />
           <TextField
             fullWidth
@@ -157,7 +148,7 @@ const Edit = () => {
             onChange={(e) => setlinkedin(e.target.value)}
             value={linkedin}
             name="linkedin"
-            sx={{ gridColumn: "span 1" }}
+            sx={{ gridColumn: "span 2" }}
           />
         </Box>
         <Box display="flex" justifyContent="end" mt="20px">

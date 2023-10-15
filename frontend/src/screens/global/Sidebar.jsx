@@ -61,7 +61,7 @@ const Sidebar = () => {
   const [selected, setSelected] = useState("Dashboard");
   const { userInfo } = useSelector((state) => state.auth)
 
-  const isNonMobile = useMediaQuery("(min-width:600px)");
+  // const isNonMobile = useMediaQuery("(min-width:600px)");
 
 
   return (
@@ -81,10 +81,10 @@ const Sidebar = () => {
           padding: "5px 35px 5px 20px !important",
         },
         "& .pro-inner-item:hover": {
-          color: "#868dfb !important",
+          color: "teal !important",
         },
         "& .pro-menu-item.active": {
-          color: "#6870fa !important",
+          color: "#00695C !important",
         },
       }}
     >
@@ -109,7 +109,6 @@ const Sidebar = () => {
                 <img
                   className="rounded rounded-circle w-50"
                   alt="logo"
-
                   src={logo}
                   style={{ cursor: "pointer", }}
                 />

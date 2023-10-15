@@ -14,7 +14,7 @@ import NotFound from "./screens/global/NotFound";
 import Offers from './screens/offer';
 import Condidats from "./screens/condidat";
 import Projets from "./screens/projet";
-import InfoGenrale from "./screens/InfoGnerale";
+import InfoGenrale from "./screens/InfoGnerale/edit";
 import Dashboard from "./screens/dashboard";
 
 

@@ -52,7 +52,7 @@ export const ProfileScreen = () => {
 
     try {
       if (passwordConfirm != password) {
-        seterr("Passwrd confirm inccorect");
+        seterr("Password confirm inccorect");
       } else {
         const res = await update({ name, email, password }).unwrap();
         dispatch(setCredentials({ ...res }));
@@ -63,7 +63,7 @@ export const ProfileScreen = () => {
     }
   };
   return (
-    <Box m="2% 5% 0 10%" height="100vh">
+    <Box m="15% 5% 0 10%" height="100vh">
       
       <Box display="flex" justifyContent="center" alignItems="center">
         <Typography
@@ -80,7 +80,7 @@ export const ProfileScreen = () => {
         <Typography variant="h5" color={colors.greenAccent[400]}>
           Administrateur
         </Typography>
-        <Divider sx={{ height: 3, m: "20px" }} color={colors.grey[300]} />
+        <Divider sx={{ height: 3, my: "20px" }} color={colors.grey[300]} />
       </Box>
       <Box>
         <Box justifyContent="center" alignItems="center" sx={{ mb: "25px" }}>
