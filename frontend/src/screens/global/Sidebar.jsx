@@ -1,26 +1,33 @@
 import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-
+import axios from 'axios';
 import logo from '../../assets/logo.jpeg'
 import { useSelector, useDispatch } from "react-redux";
 import { PiBagSimple, PiLinkLight, PiSignOutThin, PiUserListLight, PiUsersThreeThin, PiChartLineLight, PiDiamondsFourLight } from "react-icons/pi";
-
-const Item = ({ title, to, icon, selected, setSelected }) => {
+import { logout } from "../../slices/authSlice";
+const Item = ({ title, to, icon,selected, setSelected,onLogout }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const handleItemClick = () => {
+    setSelected(title);
+    if (title === "Déconnecter") {
+      onLogout();
+    }
+  };
   return (
     <MenuItem
       active={selected === title}
       style={{
         color: colors.grey[100],
       }}
-      onClick={() => setSelected(title)}
+      
+      onClick={handleItemClick}
       icon={icon}
     >
       <Typography>{title}</Typography>
@@ -30,17 +37,24 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 };
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const logoutHandler = async () => {
-    console.log("hi22");
+  
     try {
-      console.log("hii");
-      await logoutApiCall().unwrap();
+      const response = await axios.post('/api/users/logout');
       dispatch(logout());
-
-    } catch (err) {
-      console.log(err);
+      if (response.status === 200) {
+        navigate("/login"); // Redirect to the login page
+      } else {
+        console.log("erreur de logout")
+        // Handle errors or display a message to the user if needed
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
     }
   };
+ 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -216,11 +230,11 @@ const Sidebar = () => {
             </Typography>}
             <Item
               title="Déconnecter"
-              onClick={logoutHandler}
               to="/login"
               icon={<PiSignOutThin size={20} />}
               selected={selected}
               setSelected={setSelected}
+              onLogout={logoutHandler}
             />
             {isCollapsed && <Typography
               variant="body1"

@@ -251,8 +251,8 @@ const getUserProfile = asyncHandler(async (req, res) => {
         _id: req.user._id,
         name: req.user.name,
         email: req.user.email,
-        notifications: req.user.notifications,
-        notificationsUnread: req.user.notifications.filter(notification => !notification.read)
+//notifications: req.user.notifications,
+//notificationsUnread: req.user.notifications.filter(notification => !notification.read)
 
     }
     res.status(200).json(user)
@@ -292,25 +292,25 @@ const updateUserProfile = asyncHandler(async (req, res) => {
  *  @acces Private
  */
 
-const updateUserNotification = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.user._id);
-    if (user) {
-        user.notifications.forEach(element => {
-            element.read = true
-        });
-        await user.save();
-        res.status(201).json({
-            _id: user._id,
-            name: user.name,
-            email: user.email
-        });
-    } else {
-        res.status(404);
-        throw new Error('User not found')
-    }
-});
+// const updateUserNotification = asyncHandler(async (req, res) => {
+//     const user = await User.findById(req.user._id);
+//     if (user) {
+//         // user.notifications.forEach(element => {
+//         //     element.read = true
+//         // });
+//         await user.save();
+//         res.status(201).json({
+//             _id: user._id,
+//             name: user.name,
+//             email: user.email
+//         });
+//     } else {
+//         res.status(404);
+//         throw new Error('User not found')
+//     }
+// });
 export {
-    updateUserNotification,
+    //updateUserNotification,
     modifyPassword,
     writeNewPassword,
     resetPassword,

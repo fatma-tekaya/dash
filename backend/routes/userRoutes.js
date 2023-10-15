@@ -8,7 +8,7 @@ import {
     logoutUser,
     registerUser,
     getUserProfile,
-    updateUserNotification
+ //   updateUserNotification
 
 } from "../controllers/userController.js";
 import { adminprotect } from "../middleware/authMiddleware.js";
@@ -19,7 +19,7 @@ router.post('/auth', authUser)
 router.post('/logout', logoutUser)
 router.route('/profile').get(adminprotect, getUserProfile).put(adminprotect, updateUserProfile);
 
-router.route('/notifications').put(adminprotect, updateUserNotification);
+//router.route('/notifications').put(adminprotect, updateUserNotification);
 
 router.post('/resetPassword', resetPassword)
 router.post('/writePassword', writeNewPassword)

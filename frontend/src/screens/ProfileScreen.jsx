@@ -16,6 +16,7 @@ import { tokens } from "../theme";
 import { useSelector, useDispatch } from "react-redux";
 import { useUpdateMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
+
 export const ProfileScreen = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const theme = useTheme();

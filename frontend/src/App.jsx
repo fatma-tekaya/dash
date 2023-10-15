@@ -5,7 +5,6 @@ import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import LoginScreen from './screens/auth/LoginScreen.jsx'
 import PrivateRoute from './components/PrivateRoute';
-// import { ActivationPage } from "./components/ActivationPage";
 import { ResetPassword } from "./screens/auth/reset-password";
 import { EnterCode } from "./screens/auth/resetCodeScurite";
 import { NewPassword } from "./screens/auth/NewPassword";
@@ -34,11 +33,10 @@ const App = () => {
           <Route path='/resetPassword' element={<ResetPassword />} />
           <Route path='/enterCode' element={<EnterCode />} />
           <Route path='/newPassword' element={<NewPassword />} />
-          {/* <Route path='/confirm/:activationCode' element={<ActivationPage />} /> */}
           <Route path='/*' element={<NotFound />} />
           <Route path='' element={<PrivateRoute />}>
-            <Route path='/dashboard' element={<Dashboard />} /> 
-            
+            <Route path='/dashboard' element={<Dashboard />} />
+
             {/* Eleves
             <Route path='/Eleves' element={<Eleves />} />
             <Route path='/DetailsEleve' element={<DetailsEleve />} />
