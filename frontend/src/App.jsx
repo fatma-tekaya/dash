@@ -36,26 +36,6 @@ const App = () => {
           <Route path='/*' element={<NotFound />} />
           <Route path='' element={<PrivateRoute />}>
             <Route path='/dashboard' element={<Dashboard />} />
-
-            {/* Eleves
-            <Route path='/Eleves' element={<Eleves />} />
-            <Route path='/DetailsEleve' element={<DetailsEleve />} />
-            {/* Parents 
-            <Route path='/Parents' element={<Parents />} />
-            <Route path='/DetailsParent' element={<DetailsParent />} />
-            {/* Enseignants 
-            <Route path='/Enseignants' element={<Enseignants />} />
-            <Route path='/addensg' element={<AddEnsg />} />
-            <Route path='/DetailsEnsg' element={<DetailsEnsg />} />
-            {/* Categorie 
-            <Route path='/AddCategorie' element={<AddCategorie />} />
-            <Route path='/Categories' element={<ListCategories />} />
-            <Route path='/EditCategorie' element={<EditCategorie />} />
-
-            {/* Formation 
-            <Route path='/Formations' element={<ListFormation />} />
-            <Route path='/EditFormations' element={<EditFormation />} />
-            <Route path='/AddFormation' element={<AddFormation />} /> */}
             {/* offer */}
             <Route path='/offers' element={<Offers />} />
             {/* condidat */}
@@ -64,6 +44,7 @@ const App = () => {
             <Route path='/InfoGenrale' element={<InfoGenrale />} />
             {/* projet */}
             <Route path='/projets' element={<Projets />} />
+             {/* profil */}
             <Route path='/profile' element={<ProfileScreen />} />
           </Route>
         </Routes>
